@@ -19,8 +19,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1>Generic</h1>
-						<p>Ipsum dolor sit amet nullam</p>
+						<h1>How to read a routing table</h1>
 					</header>
 
 				<!-- Main -->
@@ -29,12 +28,40 @@
 						<!-- Content -->
 							<section id="content" class="main">
 								<span class="image main"><img src="images/02.jpg" alt="" /></span>
-								<h2>Magna feugiat lorem</h2>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis fames ac ante ipsum primis in faucibus.</p>
-								<p>Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Consequat leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit enim turpis lorem ipsum dolor sit amet feugiat. Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet est velit quis lorem.</p>
-								<h2>Tempus veroeros</h2>
-								<p>Cep risus aliquam gravida cep ut lacus amet. Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae ante vestibulum ante. Blandit. Ante accumsan nisi eu placerat gravida placerat adipiscing in risus fusce vitae ac mi accumsan nunc in accumsan tempor blandit aliquet aliquet lobortis. Ultricies blandit lobortis praesent turpis. Adipiscing accumsan adipiscing adipiscing ac lacinia cep. Orci blandit a iaculis adipiscing ac. Vivamus ornare laoreet odio vis praesent nunc lorem mi. Erat. Tempus sem faucibus ac id. Vis in blandit. Nascetur ultricies blandit ac. Arcu aliquam. Accumsan mi eget adipiscing nulla. Non vestibulum ac interdum condimentum semper commodo massa arcu.</p>
+								<p>Sometimes we are thrown off guard by the huge number of lines in the routing table and troubleshooting becomes messy. All of us go through it, especially if you are not the one who designed the network and you are unclear about the topology that's in place and you are trying to troubleshoot the network issue. The key is not to read the entire table line by line. There is no point in comprehending the table entirely , instead concentrate on the things you are looking for.</p>
+								<p>In this article, we will go through some of the basics. There are many more parameters that need to be discussed, we can cover them in upcoming posts.</p>
+                                <p>Here is an example of a routing table:</p>
+								
+								<p>Looking for the right set of information in the routing table and understanding it step by step, makes the troubleshooting a cakewalk. Things that I like to check in the routing table first and foremost.</p>
+                                <h2>What are the sources of these routes?</h2>
+                                <p>The letter on the left most column of every route tells us the source of the route. Each letter is used to identify each protocol. This information is usually printed right there at the start of the output for Cisco routers #how ip route command. For other routers from different switch vendors, you will have to refer to the table below that helps you correlate the letter to the Routing protocol. This information also helps you to understand if the router is participating in dynamic routing protocols.</p>
+                                <h2>Is there a default route configured for the route?</h2>
+                                <p>It is a best practice to configure the default route for a router. Note down the default route for the router as in many cases, this can be a cause of the issue.</p>
+                                <p>“*” next routing protocol identifier shows which among routes in the routing table  is selected as the default router. </p>
+                                <h2>Longest prefix match</h2>
+                                <p>When we start troubleshooting, we usually start with the source and destination IP and try to perform a packet walk hop by hop.  When we check if there is any route in the routing table that can help you to route the traffic to the destination IP, rather than matching all the lines, match the routes that have the longest prefix first. As the longest prefix would decide the subnet in which the IP is going to fall.</p>
+                                <p>For example:</p>
+                                <P>The destination IP addresses match all four entries in the routing table but the 192.168.16.0/27 has the longest prefix so it will be chosen. This is called the "longest prefix match" rule.
+                                </P>
+                                <h2>Administrative distance</h2>
+                                <p>When we have more than one route for the same network and the prefix matches as well, we decide the next hop based on the administrative distance. Administrative distance is the feature used by routers to select the best path when there are two or more different routes to the same destination from different routing protocols. Administrative distance defines the reliability of a routing protocol. Each routing protocol has its own priority and one routing protocol is better than the other for many reasons. Administrative distance helps us in evaluating the same. FYI, administrative distance of a route can be modified manually.
+                                </p>
+                                <p>Once you have narrowed down the route the packet is going to take, here is how you decode that route. </p>
+                                <P>I have listed the meaning of each parameters in above diagram below in left to right order.
+                                    1.       Routing protocol used ( ex: B* , IA, O E1 )
+                                    2.       The first number in the brackets is the administrative distance of the information source; the second number is the metric for the route. ( ex: [20/0],[110/11] )
+                                    3.       Specifies the last time the route was updated ( ex: 7w0d, 5w5d )
+                                    4.       The outgoing interface ( GigabitEthernet0/0/2.2 )
+                                    </P>
+                                    <P>
+                                        If you start with the information above, the routing table should not be gibberish to you anymore :) Once you have narrowed down the route used by the packet, or the protocol used by the route, a bigger part of the issue is solved and you are 10 steps closer to solving the issue!
+                                    </P>
+                                    <P>The links that came in handy for me to learn this concept are:
+                                        https://www.cisco.com/E-Learning/bulk/public/tac/cim/cib/using_cisco_ios_software/cmdrefs/show_ip_route.htm
+                                        CCNA CND1 Official Exam Certification Guide - Wendell Odem
+                                        </P>
 							</section>
+
 
 					</div>
 
