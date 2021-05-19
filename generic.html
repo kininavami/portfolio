@@ -36,18 +36,22 @@
 								<p>Looking for the right set of information in the routing table and understanding it step by step, makes the troubleshooting a cakewalk. Things that I like to check in the routing table first and foremost.</p>
                                 <h2>What are the sources of these routes?</h2>
                                 <p>The letter on the left most column of every route tells us the source of the route. Each letter is used to identify each protocol. This information is usually printed right there at the start of the output for Cisco routers #how ip route command. For other routers from different switch vendors, you will have to refer to the table below that helps you correlate the letter to the Routing protocol. This information also helps you to understand if the router is participating in dynamic routing protocols.</p>
+								<a href="#"><img src="images/fulls/10.JPG" alt="image not loading" /></a>
                                 <h2>Is there a default route configured for the route?</h2>
                                 <p>It is a best practice to configure the default route for a router. Note down the default route for the router as in many cases, this can be a cause of the issue.</p>
                                 <p>“*” next routing protocol identifier shows which among routes in the routing table  is selected as the default router. </p>
                                 <h2>Longest prefix match</h2>
                                 <p>When we start troubleshooting, we usually start with the source and destination IP and try to perform a packet walk hop by hop.  When we check if there is any route in the routing table that can help you to route the traffic to the destination IP, rather than matching all the lines, match the routes that have the longest prefix first. As the longest prefix would decide the subnet in which the IP is going to fall.</p>
                                 <p>For example:</p>
+								<a href="#"><img src="images/fulls/11.JPG" alt="image not loading" /></a>
                                 <P>The destination IP addresses match all four entries in the routing table but the 192.168.16.0/27 has the longest prefix so it will be chosen. This is called the "longest prefix match" rule.
                                 </P>
                                 <h2>Administrative distance</h2>
                                 <p>When we have more than one route for the same network and the prefix matches as well, we decide the next hop based on the administrative distance. Administrative distance is the feature used by routers to select the best path when there are two or more different routes to the same destination from different routing protocols. Administrative distance defines the reliability of a routing protocol. Each routing protocol has its own priority and one routing protocol is better than the other for many reasons. Administrative distance helps us in evaluating the same. FYI, administrative distance of a route can be modified manually.
                                 </p>
+								<a href="#"><img src="images/fulls/12.JPG" alt="image not loading" /></a>
                                 <p>Once you have narrowed down the route the packet is going to take, here is how you decode that route. </p>
+								<a href="#"><img src="images/fulls/13.JPG" alt="image not loading" /></a>
                                 <P>I have listed the meaning of each parameters in above diagram below in left to right order.
                                     1.       Routing protocol used ( ex: B* , IA, O E1 )
                                     2.       The first number in the brackets is the administrative distance of the information source; the second number is the metric for the route. ( ex: [20/0],[110/11] )
